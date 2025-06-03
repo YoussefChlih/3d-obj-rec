@@ -1,0 +1,27 @@
+# Handle line endings automatically for files detected as text
+* text=auto
+
+# Force LF for shell scripts
+*.sh text eol=lf
+
+# Force CRLF for Windows batch files
+*.bat text eol=crlf
+
+# Force LF for Python files
+*.py text eol=lf
+
+# Treat Jupyter notebooks as binary to avoid conflicts
+*.ipynb binary
+
+# Treat model files as binary
+*.pth binary
+*.h5 binary
+*.pkl binary
+
+# Images and other binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary

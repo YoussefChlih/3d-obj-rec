@@ -29,19 +29,31 @@ Le modèle peut classifier les objets suivants :
 
 ## 🚀 Installation Rapide
 
-### Option 1 : Lancement automatique (Windows)
+### Option 1 : Clone depuis GitHub
 ```bash
-# Double-cliquez sur launch.bat
-# ou exécutez en ligne de commande :
+# Cloner le repository
+git clone https://github.com/YoussefChlih/3d-obj-rec.git
+cd 3d-obj-rec
+
+# Lancement automatique (Windows)
+launch.bat
+
+# Ou lancement Python
+python launch.py
+```
+
+### Option 2 : Lancement automatique (Windows)
+```bash
+# Dans le dossier du projet
 launch.bat
 ```
 
-### Option 2 : Lancement automatique (Python)
+### Option 3 : Lancement automatique (Python)
 ```bash
 python launch.py
 ```
 
-### Option 3 : Installation manuelle
+### Option 4 : Installation manuelle
 ```bash
 # 1. Installer les dépendances
 pip install -r requirements.txt
@@ -56,15 +68,17 @@ streamlit run app.py
 ## 📋 Prérequis
 
 - **Python 3.8+**
-- **Modèle entraîné** : `best_dgcnn_model.pth` (généré par votre notebook)
+- **Git** (pour cloner le repository)
+- **Modèle entraîné** : `best_dgcnn_model.pth` (généré par le notebook)
 - **Dépendances** : Listées dans `requirements.txt`
 
 ## 📁 Structure du Projet
 
 ```
-Stage/
-├── app.py                    # Interface Streamlit principale
-├── launch.py                 # Script de lancement Python
+3d-obj-rec/
+├── .gitattributes           # Configuration Git pour les fins de ligne
+├── app.py                   # Interface Streamlit principale
+├── launch.py                # Script de lancement Python
 ├── launch.bat               # Script de lancement Windows
 ├── create_demo.py           # Générateur de fichiers de démonstration
 ├── requirements.txt         # Dépendances Python
@@ -74,30 +88,48 @@ Stage/
 │   ├── chair_example.off
 │   ├── table_example.ply
 │   └── ...
-└── README.md               # Ce fichier
+└── README_Interface.md     # Ce fichier
+```
+
+## 🔧 Configuration Git
+
+Pour éviter les problèmes de fins de ligne :
+
+```bash
+# Configuration globale Git (optionnel)
+git config --global core.autocrlf true
+
+# Le fichier .gitattributes gère automatiquement les fins de ligne
 ```
 
 ## 🖥️ Utilisation de l'Interface
 
-### 1. Lancement
-Après avoir lancé l'application, ouvrez votre navigateur à l'adresse : `http://localhost:8501`
+### 1. Lancement depuis GitHub
+```bash
+git clone https://github.com/YoussefChlih/3d-obj-rec.git
+cd 3d-obj-rec
+launch.bat  # ou python launch.py
+```
 
-### 2. Chargement d'un fichier
+### 2. Accès à l'interface
+Après le lancement, ouvrez votre navigateur à : `http://localhost:8501`
+
+### 3. Chargement d'un fichier
 - Cliquez sur **"Browse files"** ou glissez-déposez votre fichier
 - Formats supportés : `.off`, `.ply`
 - Taille recommandée : 500-5000 points
 
-### 3. Visualisation
+### 4. Visualisation
 - **Vue 3D interactive** : Explorez votre objet en 3D
 - **Statistiques** : Nombre de points, dimensions, taille
 - **Rotation/Zoom** : Utilisez la souris pour naviguer
 
-### 4. Classification
+### 5. Classification
 - Cliquez sur **"🚀 Classifier l'Objet"**
 - Obtenez la **classe prédite** et la **confiance**
 - Consultez les **probabilités détaillées** par classe
 
-### 5. Analyse des résultats
+### 6. Analyse des résultats
 - **Graphique de confiance** : Barres horizontales des probabilités
 - **Tableau détaillé** : Toutes les classes avec leurs scores
 - **Indicateur de qualité** : Excellent/Bon/Acceptable/Incertain
@@ -152,39 +184,17 @@ Le script `create_demo.py` génère automatiquement des exemples d'objets 3D :
 
 ## 🐛 Résolution de Problèmes
 
+### Avertissement Git sur les fins de ligne
+```
+warning: in the working copy of 'file.ext', LF will be replaced by CRLF
+```
+**Solution** : Le fichier `.gitattributes` gère automatiquement ce problème.
+
 ### Le modèle n'est pas trouvé
 ```
 ⚠️ Modèle non trouvé : best_dgcnn_model.pth
 ```
-**Solution** : Exécutez d'abord votre notebook `DGCNN_3d_obj.ipynb` pour entraîner et sauvegarder le modèle.
-
-### Erreur de format de fichier
-```
-❌ Erreur lors du chargement du fichier
-```
-**Solutions** :
-- Vérifiez que le fichier est au format OFF ou PLY
-- Assurez-vous qu'il contient des coordonnées 3D valides
-- Testez avec les fichiers de démonstration
-
-### Problème d'installation
-```
-❌ Erreur lors de l'installation des dépendances
-```
-**Solutions** :
-```bash
-# Mettre à jour pip
-python -m pip install --upgrade pip
-
-# Installer manuellement
-pip install streamlit torch plotly numpy pandas
-```
-
-### Erreur CUDA
-```
-RuntimeError: CUDA out of memory
-```
-**Solution** : Le modèle utilisera automatiquement le CPU si CUDA n'est pas disponible.
+**Solution** : Exécutez d'abord le notebook `DGCNN_3d_obj.ipynb` pour entraîner et sauvegarder le modèle.
 
 ## 📈 Performance
 
@@ -193,45 +203,25 @@ RuntimeError: CUDA out of memory
 - **Taille max recommandée** : 10,000 points
 - **Précision du modèle** : ~92% sur ModelNet10
 
-## 🔮 Fonctionnalités Futures
+## 🚀 Déploiement
 
-- [ ] Support de plus de formats (XYZ, PCD)
-- [ ] Classification par lots (multiple fichiers)
-- [ ] Export des résultats (JSON, CSV)
-- [ ] Visualisation des features internes
-- [ ] API REST pour intégration
-- [ ] Mode batch processing
-- [ ] Support ModelNet40 (40 classes)
+Pour déployer sur un serveur :
 
-## 📝 Notes Techniques
+```bash
+# Lancer sur une IP spécifique
+streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 
-### Architecture DGCNN
-- **EdgeConv layers** : 4 couches avec k=20 voisins
-- **Global features** : 1024 dimensions
-- **Classifier** : 3 couches fully connected
-- **Dropout** : 0.5 pour la régularisation
+# Ou configurer dans .streamlit/config.toml
+```
 
-### Préprocessing
-- **Normalisation** : Centrage + échelle unitaire
-- **Échantillonnage** : 1024 points par objet
-- **Augmentation** : Rotation aléatoire (optionnel)
+## 👨‍💻 Contribution
 
-## 🤝 Contribution
-
-Contributions bienvenues ! N'hésitez pas à :
-1. Signaler des bugs
-2. Proposer des améliorations
-3. Ajouter de nouvelles fonctionnalités
-4. Améliorer la documentation
-
-## 📄 Licence
-
-Ce projet est distribué sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
-## 👨‍💻 Auteur
-
-Développé avec ❤️ pour la classification d'objets 3D
+1. Fork le repository
+2. Créez une branche : `git checkout -b feature/nouvelle-fonctionnalite`
+3. Committez : `git commit -am 'Ajouter nouvelle fonctionnalité'`
+4. Push : `git push origin feature/nouvelle-fonctionnalite`
+5. Créez une Pull Request
 
 ---
 
-**🎯 Bon classement ! Si vous avez des questions, n'hésitez pas à consulter la documentation ou à tester avec les fichiers de démonstration.**
+**🎯 Bon classement ! Si vous avez des questions, consultez la documentation ou testez avec les fichiers de démonstration.**

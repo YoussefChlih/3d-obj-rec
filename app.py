@@ -222,14 +222,17 @@ def load_model():
     try:
         model = DGCNN(num_classes=10, k=20, dropout=0.5)
         
-        # Vérifier si le fichier du modèle existe
-        model_path = 'best_dgcnn_model.pth'
+        # Utiliser le chemin absolu du modèle
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(script_dir, 'best_dgcnn_model.pth')
+        
         if os.path.exists(model_path):
             model.load_state_dict(torch.load(model_path, map_location=device))
             model.to(device)
             model.eval()
             return model, True
         else:
+            st.warning(f"⚠️ Modèle non trouvé à l'emplacement : {model_path}")
             return model, False
     except Exception as e:
         st.error(f"Erreur lors du chargement du modèle : {e}")

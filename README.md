@@ -2,7 +2,7 @@
 
 Une interface web moderne et interactive pour la classification d'objets 3D utilisant le modèle DGCNN (Dynamic Graph CNN).
 
-![Interface Preview](Screenshot 2025-06-17 002512.png)
+![Interface Preview](InterfacePreview.png)
 
 ## 🌟 Fonctionnalités
 
